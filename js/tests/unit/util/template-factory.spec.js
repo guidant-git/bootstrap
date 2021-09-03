@@ -245,6 +245,7 @@ describe('TemplateFactory', () => {
       expect(factory.hasContent()).toBeFalse()
     })
   })
+
   describe('changeContent', () => {
     it('should change Content', () => {
       const template = [
