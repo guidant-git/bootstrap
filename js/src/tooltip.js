@@ -6,15 +6,7 @@
  */
 
 import * as Popper from '@popperjs/core'
-import {
-  defineJQueryPlugin,
-  findShadowRoot,
-  getElement,
-  getUID,
-  isRTL,
-  noop,
-  typeCheckConfig
-} from './util/index'
+import { defineJQueryPlugin, findShadowRoot, getElement, getUID, isRTL, noop, typeCheckConfig } from './util/index'
 import { DefaultAllowlist } from './util/sanitizer'
 import Data from './dom/data'
 import EventHandler from './dom/event-handler'
@@ -332,13 +324,15 @@ class Tooltip extends BaseComponent {
   }
 
   getTipElement() {
-    if (this.tip) {
-      return this.tip
+    if (!this.tip) {
+      this.tip = this._createTipElement(this._getContentForTemplate())
     }
 
-    const templateFactory = this._getTemplateFactory(this._getContentForTemplate())
+    return this.tip
+  }
 
-    const tip = templateFactory.toHtml()
+  _createTipElement(content) {
+    const tip = this._getTemplateFactory(content).toHtml()
     tip.classList.remove(CLASS_NAME_FADE, CLASS_NAME_SHOW)
     // todo on v6 the following can be done on css only
     tip.classList.add(`bs-${this.constructor.NAME}-auto`)
@@ -351,8 +345,7 @@ class Tooltip extends BaseComponent {
       tip.classList.add(CLASS_NAME_FADE)
     }
 
-    this.tip = tip
-    return this.tip
+    return tip
   }
 
   setContent(content) {
@@ -360,11 +353,11 @@ class Tooltip extends BaseComponent {
     if (this.tip) {
       isShown = this.tip.classList.contains(CLASS_NAME_SHOW)
       this.tip.remove()
+      this.tip = null
     }
 
     this._disposePopper()
-
-    this.tip = this._getTemplateFactory(content).toHtml()
+    this.tip = this._createTipElement(content)
 
     if (isShown) {
       this.show()
