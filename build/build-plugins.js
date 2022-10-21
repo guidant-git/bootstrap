@@ -9,7 +9,7 @@
 
 'use strict'
 
-const path = require('path')
+const path = require('node:path')
 const rollup = require('rollup')
 const globby = require('globby')
 const { babel } = require('@rollup/plugin-babel')
@@ -48,7 +48,7 @@ const build = async plugin => {
         babelHelpers: 'bundled'
       })
     ],
-    external: source => {
+    external(source) {
       // Pattern to identify local files
       const pattern = /^(\.{1,2})\//
 

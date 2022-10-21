@@ -43,12 +43,6 @@ describe('Popover', () => {
     })
   })
 
-  describe('Event', () => {
-    it('should return plugin events', () => {
-      expect(Popover.Event).toEqual(jasmine.any(Object))
-    })
-  })
-
   describe('EVENT_KEY', () => {
     it('should return plugin event key', () => {
       expect(Popover.EVENT_KEY).toEqual('.bs.popover')
@@ -170,11 +164,11 @@ describe('Popover', () => {
 
       const popoverEl = fixtureEl.querySelector('a')
       const popover = new Popover(popoverEl, { animation: false })
-      spyOn(EventHandler, 'trigger').and.callThrough()
+      const spy = spyOn(EventHandler, 'trigger').and.callThrough()
 
       popover.show()
 
-      expect(EventHandler.trigger).not.toHaveBeenCalledWith(popoverEl, Popover.Event.SHOW)
+      expect(spy).not.toHaveBeenCalledWith(popoverEl, Popover.eventName('show'))
       expect(document.querySelector('.popover')).toBeNull()
     })
 
@@ -335,11 +329,11 @@ describe('Popover', () => {
       jQueryMock.fn.popover = Popover.jQueryInterface
       jQueryMock.elements = [popoverEl]
 
-      spyOn(popover, 'show')
+      const spy = spyOn(popover, 'show')
 
       jQueryMock.fn.popover.call(jQueryMock, 'show')
 
-      expect(popover.show).toHaveBeenCalled()
+      expect(spy).toHaveBeenCalled()
     })
   })
 

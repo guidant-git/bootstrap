@@ -425,8 +425,8 @@ describe('Util', () => {
     it('should return true if the element has disabled attribute', () => {
       fixtureEl.innerHTML = [
         '<div>',
-        '  <input id="input" disabled="disabled"/>',
-        '  <input id="input1" disabled="disabled"/>',
+        '  <input id="input" disabled="disabled">',
+        '  <input id="input1" disabled="disabled">',
         '  <button id="button" disabled="true"></button>',
         '  <button id="button1" disabled="disabled"></button>',
         '  <button id="button2" disabled></button>',
@@ -460,7 +460,7 @@ describe('Util', () => {
     it('should return true if the element has class "disabled" but disabled attribute is false', () => {
       fixtureEl.innerHTML = [
         '<div>',
-        '  <input id="input" class="disabled" disabled="false"/>',
+        '  <input id="input" class="disabled" disabled="false">',
         '</div>'
       ].join('')
 
@@ -576,7 +576,7 @@ describe('Util', () => {
       const spy = jasmine.createSpy()
       const spy2 = jasmine.createSpy()
 
-      spyOn(document, 'addEventListener').and.callThrough()
+      const spyAdd = spyOn(document, 'addEventListener').and.callThrough()
       spyOnProperty(document, 'readyState').and.returnValue('loading')
 
       Util.onDOMContentLoaded(spy)
@@ -589,7 +589,7 @@ describe('Util', () => {
 
       expect(spy).toHaveBeenCalled()
       expect(spy2).toHaveBeenCalled()
-      expect(document.addEventListener).toHaveBeenCalledTimes(1)
+      expect(spyAdd).toHaveBeenCalledTimes(1)
     })
 
     it('should execute callback if readyState is not "loading"', () => {
@@ -630,6 +630,25 @@ describe('Util', () => {
       const spy = jasmine.createSpy('spy')
       Util.execute(spy)
       expect(spy).toHaveBeenCalled()
+    })
+
+    it('should execute if arg is function & return the result', () => {
+      const functionFoo = (num1, num2 = 10) => num1 + num2
+      const resultFoo = Util.execute(functionFoo, [4, 5])
+      expect(resultFoo).toBe(9)
+
+      const resultFoo1 = Util.execute(functionFoo, [4])
+      expect(resultFoo1).toBe(14)
+
+      const functionBar = () => 'foo'
+      const resultBar = Util.execute(functionBar)
+      expect(resultBar).toBe('foo')
+    })
+
+    it('should not execute if arg is not function & return default argument', () => {
+      const foo = 'bar'
+      expect(Util.execute(foo)).toBe('bar')
+      expect(Util.execute(foo, [], 4)).toBe(4)
     })
   })
 
