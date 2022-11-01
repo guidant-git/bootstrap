@@ -7,16 +7,17 @@
 
 // scss-docs-start gray-color-variables
 $white:    #fff !default;
-$gray-100: #f8f9fa !default;
-$gray-200: #e9ecef !default;
-$gray-300: #dee2e6 !default;
-$gray-400: #ced4da !default;
-$gray-500: #adb5bd !default;
-$gray-600: #6c757d !default;
-$gray-700: #495057 !default;
-$gray-800: #343a40 !default;
-$gray-900: #212529 !default;
+$gray-100: #f2f5fc !default;
+$gray-200: shade-color($gray-100, 20%) !default;
+$gray-300: shade-color($gray-100, 30%) !default;
+$gray-400: shade-color($gray-100, 40%) !default;
+$gray-500: shade-color($gray-100, 50%) !default;
+$gray-600: shade-color($gray-100, 60%) !default;
+$gray-700: shade-color($gray-100, 70%) !default;
+$gray-800: shade-color($gray-100, 80%) !default;
+$gray-900: shade-color($gray-100, 90%) !default;
 $black:    #000 !default;
+
 // scss-docs-end gray-color-variables
 
 // fusv-disable
@@ -36,21 +37,27 @@ $grays: (
 // fusv-enable
 
 // scss-docs-start color-variables
-$blue:    #0d6efd !default;
-$indigo:  #6610f2 !default;
-$purple:  #6f42c1 !default;
-$pink:    #d63384 !default;
-$red:     #dc3545 !default;
-$orange:  #fd7e14 !default;
-$yellow:  #ffc107 !default;
-$green:   #198754 !default;
-$teal:    #20c997 !default;
-$cyan:    #0dcaf0 !default;
+$rain:     #bacff1 !default;
+$blue:     #3067d4 !default;
+$nightsky: #1b2f4a !default;
+$sand:     #ddd2c5 !default;
+$indigo:   #6610f2 !default;
+$purple:   #6f42c1 !default;
+$pink:     #d63384 !default;
+$red:      #ed6d6a !default;
+$orange:   #fd7e14 !default;
+$yellow:   #f2ab6b !default;
+$green:    #73d3b8 !default;
+$teal:     #20c997 !default;
+$cyan:     #0dcaf0 !default;
 // scss-docs-end color-variables
 
 // scss-docs-start colors-map
 $colors: (
+  "rain":       $rain,
   "blue":       $blue,
+  "nightsky":   $nightsky,
+  "sand":       $sand,
   "indigo":     $indigo,
   "purple":     $purple,
   "pink":       $pink,
@@ -67,6 +74,19 @@ $colors: (
 ) !default;
 // scss-docs-end colors-map
 
+// scss-docs-start theme-colors-map
+$theme-colors: (
+  "primary":    $blue,
+  "secondary":  $gray-300,
+  "success":    $green,
+  "info":       $rain,
+  "warning":    $yellow,
+  "danger":     $red,
+  "light":      $gray-100,
+  "dark":       $gray-900
+) !default;
+// scss-docs-end theme-colors-map
+
 // The contrast ratio to reach against white, to determine if color changes from "light" to "dark". Acceptable values for WCAG 2.0 are 3, 4.5 and 7.
 // See https://www.w3.org/TR/WCAG20/#visual-audio-contrast-contrast
 $min-contrast-ratio:   4.5 !default;
@@ -76,6 +96,7 @@ $color-contrast-dark:      $black !default;
 $color-contrast-light:     $white !default;
 
 // fusv-disable
+
 $blue-100: tint-color($blue, 80%) !default;
 $blue-200: tint-color($blue, 60%) !default;
 $blue-300: tint-color($blue, 40%) !default;
@@ -85,6 +106,17 @@ $blue-600: shade-color($blue, 20%) !default;
 $blue-700: shade-color($blue, 40%) !default;
 $blue-800: shade-color($blue, 60%) !default;
 $blue-900: shade-color($blue, 80%) !default;
+
+$nightsky-100: tint-color($nightsky, 80%) !default;
+$nightsky-200: tint-color($nightsky, 60%) !default;
+$nightsky-300: tint-color($nightsky, 40%) !default;
+$nightsky-400: tint-color($nightsky, 20%) !default;
+$nightsky-500: $nightsky !default;
+$nightsky-600: shade-color($nightsky, 20%) !default;
+$nightsky-700: shade-color($nightsky, 40%) !default;
+$nightsky-800: shade-color($nightsky, 60%) !default;
+$nightsky-900: shade-color($nightsky, 80%) !default;
+
 
 $indigo-100: tint-color($indigo, 80%) !default;
 $indigo-200: tint-color($indigo, 60%) !default;
@@ -407,7 +439,7 @@ $body-text-align:           null !default;
 // Style anchor elements.
 
 $link-color:                              $primary !default;
-$link-decoration:                         underline !default;
+$link-decoration:                         none !default;
 $link-shade-percentage:                   20% !default;
 $link-hover-color:                        shift-color($link-color, $link-shade-percentage) !default;
 $link-hover-decoration:                   null !default;
@@ -498,6 +530,7 @@ $border-radius-lg:            .5rem !default;
 $border-radius-xl:            1rem !default;
 $border-radius-2xl:           2rem !default;
 $border-radius-pill:          50rem !default;
+$border-radius-button:        50rem !default;
 // scss-docs-end border-radius-variables
 
 // scss-docs-start box-shadow-variables
@@ -540,8 +573,11 @@ $aspect-ratios: (
 
 // scss-docs-start font-variables
 // stylelint-disable value-keyword-case
-$font-family-sans-serif:      system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !default;
+
+$font-family-serif:           lemonde-journal, serif, "Times New Roman", Georgia !default;
+$font-family-sans-serif:      "Lato", Sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !default;
 $font-family-monospace:       SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !default;
+
 // stylelint-enable value-keyword-case
 $font-family-base:            var(--#{$prefix}font-sans-serif) !default;
 $font-family-code:            var(--#{$prefix}font-monospace) !default;
@@ -560,18 +596,17 @@ $font-weight-medium:          500 !default;
 $font-weight-semibold:        600 !default;
 $font-weight-bold:            700 !default;
 $font-weight-bolder:          bolder !default;
-
 $font-weight-base:            $font-weight-normal !default;
 
 $line-height-base:            1.5 !default;
 $line-height-sm:              1.25 !default;
 $line-height-lg:              2 !default;
 
-$h1-font-size:                $font-size-base * 2.5 !default;
-$h2-font-size:                $font-size-base * 2 !default;
-$h3-font-size:                $font-size-base * 1.75 !default;
-$h4-font-size:                $font-size-base * 1.5 !default;
-$h5-font-size:                $font-size-base * 1.25 !default;
+$h1-font-size:                $font-size-base * 3 !default;
+$h2-font-size:                $font-size-base * 2.25 !default;
+$h3-font-size:                $font-size-base * 2 !default;
+$h4-font-size:                $font-size-base * 1.75 !default;
+$h5-font-size:                $font-size-base * 1.5 !default;
 $h6-font-size:                $font-size-base !default;
 // scss-docs-end font-variables
 
@@ -588,11 +623,11 @@ $font-sizes: (
 
 // scss-docs-start headings-variables
 $headings-margin-bottom:      $spacer * .5 !default;
-$headings-font-family:        null !default;
+$headings-font-family:        $font-family-serif !default;
 $headings-font-style:         null !default;
 $headings-font-weight:        500 !default;
 $headings-line-height:        1.2 !default;
-$headings-color:              null !default;
+$headings-color:              $nightsky !default;
 // scss-docs-end headings-variables
 
 // scss-docs-start display-headings
@@ -774,9 +809,9 @@ $btn-link-hover-color:        var(--#{$prefix}link-hover-color) !default;
 $btn-link-disabled-color:     $gray-600 !default;
 
 // Allows for customizing button radius independently from global border radius
-$btn-border-radius:           $border-radius !default;
-$btn-border-radius-sm:        $border-radius-sm !default;
-$btn-border-radius-lg:        $border-radius-lg !default;
+$btn-border-radius:           $border-radius-button !default;
+$btn-border-radius-sm:        $border-radius-button !default;
+$btn-border-radius-lg:        $border-radius-button !default;
 
 $btn-transition:              color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out !default;
 
